@@ -1,0 +1,67 @@
+For cluster 1:
+(3513,  Rules of Engagement (2000),  Drama|Thriller)
+(3755,  Perfect Storm, The (2000),  Action|Adventure|Thriller)
+(3827,  Space Cowboys (2000),  Action|Sci-Fi)
+(3744,  Shaft (2000),  Action|Crime)
+(3753,  Patriot, The (2000),  Action|Drama|War)
+
+For cluster 2:
+(1375,  Star Trek III: The Search for Spock (1984),  Action|Adventure|Sci-Fi)
+(1391,  Mars Attacks! (1996),  Action|Comedy|Sci-Fi|War)
+(1377,  Batman Returns (1992),  Action|Adventure|Comedy|Crime)
+(293,  Professional, The (a.k.a. Leon: The Professional) (1994),  Crime|Drama|Romance|Thriller)
+(161,  Crimson Tide (1995),  Drama|Thriller|War)
+
+For cluster 3:
+(2277,  Somewhere in the City (1997),  Drama)
+(3395,  Nadine (1987),  Comedy)
+(1601,  Hoodlum (1997),  Crime|Drama|Film-Noir)
+(178,  Love & Human Remains (1993),  Comedy)
+(271,  Losing Isaiah (1995),  Drama)
+
+For cluster 4:
+(3034,  Robin Hood (1973),  Animation|Children's)
+(1282,  Fantasia (1940),  Animation|Children's|Musical)
+(364,  Lion King, The (1994),  Animation|Children's|Musical)
+
+For cluster 5:
+(1962,  Driving Miss Daisy (1989),  Drama)
+(1199,  Brazil (1985),  Sci-Fi)
+(1238,  Local Hero (1983),  Comedy)
+(1179,  Grifters, The (1990),  Crime|Drama|Film-Noir)
+(2871,  Deliverance (1972),  Adventure|Thriller)
+
+For cluster 6:
+(1968,  Breakfast Club, The (1985),  Comedy|Drama)
+(1197,  Princess Bride, The (1987),  Action|Adventure|Comedy|Romance)
+(2987,  Who Framed Roger Rabbit? (1988),  Adventure|Animation|Film-Noir)
+(541,  Blade Runner (1982),  Film-Noir|Sci-Fi)
+(2804,  Christmas Story, A (1983),  Comedy|Drama)
+
+For cluster 7:
+(1193,  One Flew Over the Cuckoo's Nest (1975),  Drama)
+(3751,  Chicken Run (2000),  Animation|Children's|Comedy)
+(1230,  Annie Hall (1977),  Comedy|Romance)
+(1288,  This Is Spinal Tap (1984),  Comedy|Drama|Musical)
+(2997,  Being John Malkovich (1999),  Comedy)
+
+For cluster 8:
+(556,  War Room, The (1993),  Documentary)
+(383,  Wyatt Earp (1994),  Western)
+(413,  Airheads (1994),  Comedy)
+(1971,  Nightmare on Elm Street 4: The Dream Master, A (1988),  Horror)
+(222,  Circle of Friends (1995),  Drama|Romance)
+
+For cluster 9:
+(2457,  Running Scared (1986),  Action|Comedy)
+(2734,  Mosquito Coast, The (1986),  Drama)
+(2301,  History of the World: Part I (1981),  Comedy)
+(1379,  Young Guns II (1990),  Action|Comedy|Western)
+(376,  River Wild, The (1994),  Action|Thriller)
+
+For cluster 10:
+(527,  Schindler's List (1993),  Drama|War)
+(1704,  Good Will Hunting (1997),  Drama)
+(457,  Fugitive, The (1993),  Action|Thriller)
+(50,  Usual Suspects, The (1995),  Crime|Thriller)
+(296,  Pulp Fiction (1994),  Crime|Drama)

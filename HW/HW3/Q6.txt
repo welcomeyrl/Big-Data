@@ -1,0 +1,10 @@
+/usr/local/apache-cassandra-2.0.5/bin/cqlsh csac0
+
+CREATE KEYSPACE rxy121130 WITH REPLICATION = {'class':'SimpleStrategy','replication_factor':1};
+USE rxy121130;
+CREATE TABLE review(review_id varchar, user_id varchar ,business_id varchar,rating float, PRIMARY KEY((business_id),rating)) WITH CLUSTERING ORDER BY (rating DESC);
+CREATE INDEX stars_index ON review (rating);
+COPY review(review_id,user_id,business_id,rating) from 'review.csv' with delimiter = '^';
+select * from review where rating = 4.0 LIMIT 10;
+truncate review;
+drop table review;

@@ -1,0 +1,11 @@
+//Please ensure that they read input from command line.
+
+val lines = sc.textFile("business.csv")
+
+val ln = readLine() 
+
+val linesZipcode = lines.map(line => line.split("\\^")).filter(line => line(1).contains(ln)).map(line =>line(0)).take(20)
+
+
+Array(PBqjmOB7Yjti3cFqy8-Ctw, SGlowZEhllX_NqwQIpIzaQ, PiiDzC9wPzfVA-xyTXC0GQ, dTn4zWESE49YRd5Mox9MCg, 4soRFJ8cijXfCeWj7R5q4w, 2_u1MYw34yj_woFHk8DxAA, -ar6SC9nUaam_KbOJOgn-A, f_y0wlUALp8O95b3sKk7mQ, VeiGa7h8p1I2yAIfgZjgtw, aqmS1P71bWX2j8MFNAweBA, zrN108VsXtdau1vBGmGarA, iD6oJ4qcM3RDF4PzKkk7fA, PuTHnd2I7mhZG28wQw8rVg, 9rdigHXd49AKYopcG9-Mnw, Uu2E4BAKboSyNgVTbqdykA, N93q6AtoyayMZa-x0sNqgg, A9F5f4aXXkrGCnHR6s0eUQ, BfS5Ec49hDTlLrbti--MYw, ce0OlLhdpoxyMQE03Q98lQ, _MbxQm1v7hevbFxHcw_BGA)
+

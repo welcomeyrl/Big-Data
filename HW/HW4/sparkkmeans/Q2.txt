@@ -1,0 +1,143 @@
+import org.apache.spark.SparkContext._
+import scala.collection._
+import scala.io.Source
+import scala.math._
+import scala.collection.mutable.ArrayBuffer
+
+
+def corr(x : Array[Double], y : Array[Double]) : Double = {
+    if (x.size != y.size) {
+      throw new IllegalArgumentException("Vectors must have same length");
+    }
+    if (x.size == 0) {
+      throw new IllegalArgumentException("Vectors must contain data");
+    }
+
+    val n = x.size
+    
+    val sumX = x.reduce(_+_)
+    val xNo = x.count(_ != 0)
+    val meanX = sumX / xNo
+
+    val sumY = y.reduce(_+_)
+    val yNo = y.count(_ != 0)
+    val meanY = sumY / yNo
+
+    var sumProduct = 0.0
+    var sumSqX = 0.0
+    var sumSqY = 0.0
+    for(i <- 0 until n){
+	var elementX = x(i)
+	var elementY = y(i)
+
+	if(elementX != 0 && elementY != 0){
+	    elementX = elementX - meanX
+	    elementY = elementY - meanY
+
+	    sumProduct = sumProduct + elementX * elementY
+
+	    sumSqX = sumSqX + elementX * elementX
+	    sumSqY = sumSqY + elementY * elementY
+	}
+    }
+
+    var xd = Math.sqrt(sumSqX)
+    var yd = Math.sqrt(sumSqY)
+
+    return sumProduct / (xd * yd)
+}
+
+
+val data = sc.textFile("/rxy121130/HW4/itemusermat")
+
+val points = data.map(t => (t.split(" ")(0), t.split(" ").drop(1).map(_.toDouble)))   //(movie_id, array[Double])
+
+val input = readLine("Input the movieID:")
+
+
+
+
+
+
+/**
+ * First, add the input data into "result" according to movies.dat
+ * check: if the movieID is in movies.dat.
+ *
+ * Second, continue to process the input according to itemusermat file
+ * (1) check: if the movieID is not in itemusermat file. Then program will directly go to the final step.
+ * (2) check: if the movieID is in itemusermat file, but it doesn't receive any review. Then, program will not make any recommandations, and directly go to the final step.
+ * (3) check: if the recommanded-movieID is not in the movies.dat. Then it will not be added to "result". 
+ *
+ * Finall, print all the data in the "result"
+ * (1) If the input doesn't exist in the two files (movies.dat and itemusermat). Then, only print a message.
+ * (2) If the input exists only in the movies.dat, or it is in both files but without any reviews in the itemusermat file. Then, only print the data in the movies.dat with no recommandations.
+ * (3) If the input esists only in the itemusermat file, but the 5 recommandations are in both files. Then print the 5-recommandations data in the movies.dat only.
+ * (4) Otherwise, print the total 6 movies info.
+ */
+
+// first step
+val movieData = sc.textFile("/rxy121130/HW4/movies.dat")
+
+val splitLines = movieData.map(line => line.split("::")).map(line => (line(0), (line(0), "  " + line(1), "  " + line(2)))).toArray      //(movie_id, (movie_id, title, genres))
+
+var results = ArrayBuffer[(String, String, String)]()
+
+val original = splitLines.filter(x => x._1 == input).map(x => x._2)   //(movie_id, title, genres) of the input
+
+if(original.size != 0){
+    results += original(0)
+}
+
+
+// second step
+val basicID = points.filter(x => x._1==input).map(t => t._2).toArray.flatten   // array[Double] of input
+
+val check = basicID.size
+
+if(check == 0){
+
+    println("\n No such movieID in the itemusermat file!!!")
+
+} else {
+
+    println("\n The movieID " + input +" is found in the itemusermat file.\n")
+
+    val totalReview = basicID.count(_ != 0)
+
+    if(totalReview == 0){
+
+        println("\n This movieID " + input +" has no reviews in the itemusermat file. So we cannot make any recommandations.\n")
+
+    } else {
+
+        val similarity = points.toArray.map(t => (corr(basicID, t._2), t._1))   //(similarity, movie_id)
+
+        val candidates = similarity.filter(x => x._1 >= -1).sortBy(x => x._1).reverse   //(similarity, movie_id)   -ordered by similiarity (descending)
+
+        val top5 = candidates.filter(x => x._2 != input).map(x => (x._2, x._1)).take(5).map(x => x._1)   //(movie_id)
+
+        for(i <- 0 until 5){
+            val id = top5(i)   //(movie_id)
+
+            val each = splitLines.filter(x => x._1 == id).map(x => x._2)   //(movie_id, title, genres) of each recommandation
+
+	    if(each.size != 0){
+		results += each(0)
+	    }
+        }
+
+    }
+}
+
+
+// fianl step
+if (results.size == 0){
+    println("\n No such movieID existed in both files (the movies.dat and itemusermat)!!!")
+} else {
+    println("\n")
+    println("First line is input, next 5 are the top 5 similiar movies")
+
+    results.foreach(println)
+}
+
+

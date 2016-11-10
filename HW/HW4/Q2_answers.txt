@@ -1,0 +1,7 @@
+First line is input, next 5 are the top 5 similiar movies
+(90,  Journey of August King, The (1995),  Drama)
+(1238,  Local Hero (1983),  Comedy)
+(3802,  Freejack (1992),  Action|Sci-Fi)
+(3805,  Knightriders (1981),  Action|Adventure|Drama)
+(3809,  What About Bob? (1991),  Comedy)
+(435,  Coneheads (1993),  Comedy|Sci-Fi)

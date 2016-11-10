@@ -1,0 +1,45 @@
+How to run Q1:
+
+hadoop jar Q1.jar PaloAltoFilter /yelpdatafall/business /rxy121130/Q1
+
+Outcomes:
+
+hdfs dfs -cat /rxy121130/Q1/*
+
+
+How to run Q2:
+
+
+
+hadoop jar Q2.jar Top10 /yelpdatafall/review /rxy121130/Q2
+
+Outcomes:
+
+hdfs dfs -cat /rxy121130/Q2/*
+
+
+
+
+How to run Q3:
+
+
+
+hadoop jar Q3.jar ReduceJoin /yelpdatafall/review /yelpdatafall/business /rxy121130/Q3
+
+Outcomes:
+
+hdfs dfs -cat /rxy121130/Q3/*
+
+
+
+How to run Q4:
+
+
+
+hadoop jar Q4.jar MapJoin   /yelpdatafall/business  /yelpdatafall/review  /rxy121130/Q4
+
+Outcomes:
+
+hdfs dfs -cat /rxy121130/Q4/*
+
+

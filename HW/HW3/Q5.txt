@@ -1,0 +1,8 @@
+/usr/local/apache-cassandra-2.0.5/bin/cqlsh  csac0
+CREATE KEYSPACE rxy121130 WITH REPLICATION = {'class':'SimpleStrategy','replication_factor':1};
+USE rxy121130;
+CREATE TABLE business(business_id varchar PRIMARY KEY,full_address varchar,categories varchar);
+copy business(business_id, full_address, categories) from 'business.csv' with delimiter = '^';
+select * from business where business_id = 'HPWmjuivv3xJ279qSVfNaQ';
+truncate business;
+drop table business;

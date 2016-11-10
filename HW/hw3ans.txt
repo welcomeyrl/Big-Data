@@ -1,0 +1,108 @@
+business = LOAD '/yelpdatafall/business/business.csv' USING PigStorage('^') AS(business_id:chararray,full_address:chararray,categories:chararray);
+
+
+user = LOAD '/yelpdatafall/user/user.csv' USING PigStorage('^') AS(user_id:chararray,name:chararray,url:chararray);
+
+
+
+review = LOAD '/yelpdatafall/review/review.csv' USING PigStorage('^') AS(review_id:chararray,user_id:chararray,business_id:chararray,stars:int);
+
+
+
+Q1
+
+groupedRatings = GROUP review BY business_id;
+/* Get Average rating for each movie */
+averageRating = FOREACH groupedRatings GENERATE group,AVG(review.stars) AS avgRating;
+distBis = distinct business;
+filteredBus = FILTER distBis by (full_address matches '.*CA.*');
+bus2 = FOREACH filteredBus GENERATE business_id,full_address,categories;
+/* Now join movies with genre Action and War with their average ratings */
+joinResRating = JOIN bus2 BY business_id , averageRating BY $0;
+
+/* Arrange movies with descending order of their Average Rating*/
+orderedresRating_1 = ORDER joinResRating BY $2 DESC;
+
+g = limit orderedresRating_1 10;
+
+store g into '/gga110020/pighw31'
+
+5SxjVvtoWxU03-we_Ekrkw	10914 Kinross AveWestwoodLos Angeles, CA 90024	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping, Men's Clothing)	5SxjVvtoWxU03-we_Ekrkw	3.129032258064516
+RFVhR-4R6LLM5LOVRYD1YA	206 W Bonita AveClaremont, CA 91711	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping, Antiques)	RFVhR-4R6LLM5LOVRYD1YA	4.5
+p-viS1wU1oL--7lTlbdeXQ	1138 Westwood BlvdWestwoodWestwood, CA 90024	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping)	p-viS1wU1oL--7lTlbdeXQ	3.8870967741935485
+g1eemH_57M0936npvAUfoQ	1240 E Colorado StPasadenaPasadena, CA 91106	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping)	g1eemH_57M0936npvAUfoQ	3.875
+UMFQfomM9P9gg62Id8qx3g	87 Stanford Shopping CtrPalo Alto, CA 94304	List(Women's Clothing, Sporting Goods, Fashion, Shopping, Sports Wear)	UMFQfomM9P9gg62Id8qx3g	3.6470588235294117
+h1dL9w_5UTJ6GedDbpwoUA	Town & Country Village855 El Camino RealPalo Alto, CA 94301	List(Women's Clothing, Sporting Goods, Fashion, Shopping, Sports Wear)	h1dL9w_5UTJ6GedDbpwoUA	4.857142857142857
+vf_knGWuP0PwHxYHnAn9Hg	863 Monterey StSan Luis Obispo, CA 93401	List(Women's Clothing, Sporting Goods, Fashion, Shopping, Outdoor Gear)	vf_knGWuP0PwHxYHnAn9Hg	4.5
+vG1_U8_Je5HzRSvMpIujXA	345 S Lake AvePasadenaPasadena, CA 91101	List(Women's Clothing, Men's Clothing, Sporting Goods, Fashion, Shopping)	vG1_U8_Je5HzRSvMpIujXA	4.5
+Lt7QApL5vaS43DHiT59TVw	9500 Gilman Dr 0004La Jolla, CA 92093	List(Women's Clothing, Men's Clothing, Sporting Goods, Fashion, Shopping)	Lt7QApL5vaS43DHiT59TVw	3.5
+1dpIijLH9gZaWbA3uhhi2A	143A Harvard AveClaremont, CA 91711	List(Women's Clothing, Men's Clothing, Fashion, Shopping, Shoe Stores)	1dpIijLH9gZaWbA3uhhi2A	5.0
+
+
+
+Q2
+
+
+groupedRatings = GROUP review BY business_id;
+/* Get Average rating for each movie */
+countRating = FOREACH groupedRatings GENERATE group,COUNT(review.stars) AS counterId;
+distBus = distinct business;
+filBus = FILTER distBus by NOT(full_address matches '.*CA.*');
+bus2 = FOREACH filBus GENERATE business_id,full_address,categories;
+/* Now join movies with genre Action and War with their average ratings */
+joinResRating = JOIN bus2 BY business_id , countRating BY $0;
+
+/* Arrange movies with descending order of their Counted ratings*/
+orderedresRating_1 = ORDER joinResRating BY $2 DESC;
+
+g = limit orderedresRating_1 10;
+
+store g into '/gga110020/pighw32'
+
+yem9gsi66XSNG9Pxv7FFcw	308 State StDowntown Ann ArborAnn Arbor, MI 48104	List(Yoga, Physical Therapy, Beauty and Spas, Health and Medical, Fitness & Instruction, Active Life, Massage)	yem9gsi66XSNG9Pxv7FFcw	6
+k_meGDP6Oec4IGB4z4b5Eg	2532 Guadalupe StThe DragAustin, TX 78705	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping, Thrift Stores)	k_meGDP6Oec4IGB4z4b5Eg	35
+lZWDJ6nNfDmkV2NVdNhJOQ	4300 University Way NEUniversity DistrictSeattle, WA 98105	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping, Men's Clothing)	lZWDJ6nNfDmkV2NVdNhJOQ	50
+aRFZ5ctNMpza1B6njD4TCQ	215 S State StSte 3Downtown Ann ArborAnn Arbor, MI 48104	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping)	aRFZ5ctNMpza1B6njD4TCQ	9
+xeiAVo9qNFkQ3zE8ZW-IFQ	8 Eliot StHarvard SquareCambridge, MA 02138	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping)	xeiAVo9qNFkQ3zE8ZW-IFQ	45
+muMQYQmrTu3g0yqDUpd9pA	2712 Guadalupe StWest CampusAustin, TX 78705	List(Women's Clothing, Used, Vintage & Consignment, Fashion, Shopping)	muMQYQmrTu3g0yqDUpd9pA	2
+vTg6DXNv_mvVIBHPsat7jg	907 Sagamore Pkwy WWest Lafayette, IN 47906	List(Women's Clothing, Men's Clothing, Thrift Stores, Shopping, Fashion)	vTg6DXNv_mvVIBHPsat7jg	2
+3Tbq48YijgkrZfxnfHA94Q	126 E State StIthaca, NY 14850	List(Women's Clothing, Men's Clothing, Fashion, Shopping, Used, Vintage & Consignment)	3Tbq48YijgkrZfxnfHA94Q	10
+S7PYTB4Mn-w2sBzNZ-bUXg	2100 Guadalupe St # BThe DragAustin, TX 78705	List(Women's Clothing, Men's Clothing, Fashion, Shopping, Used, Vintage & Consignment)	S7PYTB4Mn-w2sBzNZ-bUXg	2
+LNojGrHoDczhrSHNDQgfzA	4748 University Way NEUniversity DistrictSeattle, WA 98105	List(Women's Clothing, Men's Clothing, Fashion, Shopping, Used, Vintage & Consignment)	LNojGrHoDczhrSHNDQgfzA	14
+
+
+
+Q3
+C = cogroup business by business_id, review by business_id; 
+D = filter C by not IsEmpty(business);   
+DESCRIBE D;
+E = limit D 5;
+store E into '/gga110020/pig2';
+
+Q4
+C = cogroup business by business_id, review by business_id; 
+D = filter C by not IsEmpty(business);   
+E = foreach D generate flatten(business), flatten (review);
+F = limit E 5;
+store F into '/gga110020/pig3';
+
+Q5
+
+CREATE TABLE business (business_id varchar,full_address varchar, categories varchar,  PRIMARY KEY (business_id) 
+COPY business (business_id ,full_address,categories) FROM './business.csv' WITH DELIMITER='^';
+
+
+Q6 1
+CREATE TABLE review (review_id varchar,user_id varchar, business_id varchar,  stars varchar,  PRIMARY KEY ((user_id, business_id),stars)) WITH CLUSTERING ORDER BY (stars DESC);
+
+COPY review (review_id ,user_id ,business_id ,stars) FROM './review.csv' WITH DELIMITER='^';
+
+Q6
+2 CREATE INDEX my_star
+   ON review (stars);
+
+
+Q7
+
+/usr/local/apache-cassandra-2.0.5/bin/nodetool -h csac0 ring 
+/usr/local/apache-cassandra-2.0.5/bin/nodetool -h csac0 status

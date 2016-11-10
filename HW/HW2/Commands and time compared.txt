@@ -1,0 +1,20 @@
+Commands:
+
+
+Q2a: spark-shell --master local[*]
+Q2b: spark-shell --master yarn-client --executor-memory 4G --executor-cores 7 --num-executors 6
+
+After run 20 times for each file of Q2 and Q3
+
+
+I found that Q2b and Q3b are faster than Q2a and Q3a.  Yarn mode and broadcast variable are faster than local mode.
+
+
+
+For Q1, first only copy the code "val input = readLine()", then enter the address which you want such as Stanford or TX or something else. Then copy the rest code "val lines = sc.textFile("hdfs://cshadoop1/yelpdatafall/business/business.csv")
+
+lines.filter(line => line.contains(input)).map(line => line.split("\\^")).map(line => line(0)).distinct.saveAsTextFile("hdfs://cshadoop1/rxy121130/HW2/Q1")".
+
+
+
+
